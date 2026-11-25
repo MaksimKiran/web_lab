@@ -19,17 +19,21 @@
     <h1>Welcome to the Team Manager</h1>
 </header>
 <main>
+    <!-- #TODO: buttons -->
     <h2>Choose a team:</h2>
+    <p style="color:red" th:if="${errorMessage}" th:text="${errorMessage}"></p>
     <form action="/players" method="GET">
         <!-- Display radio buttons for each team,
              the value should be the team id
              and the displayed text should be:
              Name: <name>, City: <city>, Players: <number of players> -->
-        <input type="radio" name="teamId" value="1"> Team 1 <br/>
-        <input type="radio" name="teamId" value="2"> Team 2 <br/>
-        <input type="radio" name="teamId" value="3"> Team 3 <br/>
+        <div th:each="t : ${teams}">
+            <input type="radio" name="teamId" th:value="${t.getId()}">
+            <span th:text="${'Name: ' + t.getName() + ', City: ' + t.getCity() + ', Players: ' + t.getPlayers().size() + ', League: ' + t.getLeague().getName()}"></span>
+        </div>
         <input type="submit" value="Submit">
     </form>
+
 </main>
 </body>
 </html>

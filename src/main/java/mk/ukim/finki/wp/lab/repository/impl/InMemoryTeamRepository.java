@@ -29,4 +29,9 @@ public class InMemoryTeamRepository implements TeamRepository {
         DataHolder.teams.add(team);
         return team;
     }
+
+    @Override
+    public void deleteById(Long id) {
+        DataHolder.teams.removeIf(t -> t.getId().equals(id));
+    }
 }

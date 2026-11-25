@@ -3,6 +3,7 @@ package mk.ukim.finki.wp.lab.bootstrap;
 import jakarta.annotation.PostConstruct;
 import mk.ukim.finki.wp.lab.model.Player;
 import mk.ukim.finki.wp.lab.model.Team;
+import mk.ukim.finki.wp.lab.model.League;
 import org.springframework.stereotype.Component;
 
 import java.sql.Array;
@@ -13,17 +14,23 @@ import java.util.List;
 public class DataHolder {
     public static List<Team> teams = null;
     public static List<Player> players = null;
+    public static List<League> leagues = null;
 
     @PostConstruct
     public void init() {
         teams = new ArrayList<>();
         players = new ArrayList<>();
+        leagues = new ArrayList<>();
 
-        teams.add(new Team(1L, "MaksoTeam", "Skopje", new ArrayList<>()));
-        teams.add(new Team(2L, "KanevTeam", "Struga", new ArrayList<>()));
-        teams.add(new Team(3L, "KalinTeam", "Skopje", new ArrayList<>()));
-        teams.add(new Team(4L, "AleksTeam", "Queens", new ArrayList<>()));
-        teams.add(new Team(5L, "MaeTeam", "Portland", new ArrayList<>()));
+        leagues.add(new League(1L, "maksoLeague", "Macedonia","best league of them all"));
+        leagues.add(new League(2L, "kaneveague", "Macedonia","second best league of them all"));
+        leagues.add(new League(3L, "aleksLeague", "Macedonia","third best league of them all"));
+
+        teams.add(new Team("MaksoTeam", "Skopje", new ArrayList<>(), leagues.getFirst()));
+        teams.add(new Team("KanevTeam", "Struga", new ArrayList<>(), leagues.get(1)));
+        teams.add(new Team("KalinTeam", "Skopje", new ArrayList<>(), leagues.get(2)));
+        teams.add(new Team("AleksTeam", "Queens", new ArrayList<>(), leagues.get(1)));
+        teams.add(new Team("MaeTeam", "Portland", new ArrayList<>(), leagues.get(2)));
 
         players.add(new Player("makso23", "Maksim", "Kirandjiski", "left", 23));
         players.add(new Player("takenforransom", "Mae", "Josifoska", "right", 67));

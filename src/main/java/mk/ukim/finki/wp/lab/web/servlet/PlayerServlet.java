@@ -31,16 +31,29 @@ public class PlayerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String teamIdParam = req.getParameter("teamId");
+        if (teamIdParam == null || teamIdParam.isBlank()) {
+            resp.sendRedirect("/teams");
+            return;
+        }
+
+        Team team;
+        try {
+            team = teamService.findById(Long.parseLong(teamIdParam));
+        } catch (IllegalArgumentException e) {
+            resp.sendRedirect("/teams");
+            return;
+        }
+
         IWebExchange webExchange = JakartaServletWebApplication
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
 
         WebContext context = new WebContext(webExchange);
+        context.setVariable("team", team);
+        context.setVariable("players", playerService.listPlayers());
+        context.setVariable("errorMessage", req.getParameter("errorMessage"));
 
-        String teamId = req.getParameter("teamId");
-        List<Player> players = playerService.listPlayers();
-        Team team = teamService.findById(Long.parseLong(teamId));
-
-
+        springTemplateEngine.process("playersList", context, resp.getWriter());
     }
 }

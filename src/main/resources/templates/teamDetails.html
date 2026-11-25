@@ -27,16 +27,18 @@
 <body>
 <!-- Dynamically display data -->
 <header>
-    <h1>Team: Skopje Eagles</h1>
+    <h1 th:text="'Team: ' + ${team.name}"></h1>
 </header>
 <section>
-    <h2>City: Skopje</h2>
+    <h2 th:text="'City: ' + ${team.getCity()}"></h2>
+
     <h2>Players in this team:</h2>
     <ul>
-        <li>Marko Ilievski (#10, Midfielder)</li>
-        <li>Ana Petreska (#9, Forward)</li>
+        <li th:each="p : ${team.getPlayers()}"
+            th:text="${p.print()}"></li>
     </ul>
     <!-- Show "No players yet" if the team has no players -->
+    <p th:if="${team.getPlayers().isEmpty()}">No players yet</p>
     <p>
         <a href="/players?teamId=1">Add another player</a> |
         <a href="/teams">Back to teams</a>

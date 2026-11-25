@@ -34,6 +34,6 @@ public class TeamListServlet extends HttpServlet {
 
         List<Team> teams = teamService.listTeams();
         context.setVariable("teams", teams);
-        springTemplateEngine.process("listTeams.html", context, resp.getWriter());
+        springTemplateEngine.process("listTeams", context, resp.getWriter());
     }
 }

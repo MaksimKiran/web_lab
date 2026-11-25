@@ -6,9 +6,13 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Player {
-    String playerId;
-    String firstName;
-    String lastName;
-    String position;
-    int jerseyNumber;
+    private String playerId;
+    private String firstName;
+    private String lastName;
+    private String position;
+    private int jerseyNumber;
+
+    public String print() {
+        return firstName + " " + lastName + " (#" + jerseyNumber + ", " + position + ")";
+    }
 }
